@@ -1,0 +1,64 @@
+@import '/src/assets/styles/vars.layout';
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+
+  display: grid;
+  grid-gap: $grid-gap;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+
+  li {
+    box-sizing: border-box;
+    flex: 0 1 25%;
+
+    .gallery-card {
+      position: relative;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: $border-radius;
+
+      button {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+
+      .image-wrapper {
+        position: relative;
+        height: 25vh;
+
+        img {
+          object-fit: cover;
+          width:100%;
+          height:100%;
+        }
+
+        .header-text {
+          line-height: 1.1rem;
+          margin-bottom: 4px;
+        }
+
+        .card-infobox {
+          padding-left: 12px;
+          padding-right: 12px;
+          box-sizing: border-box;
+          position: absolute;
+          bottom: 5px;
+          color: white;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          justify-items: stretch;
+          width: 100%;
+
+          text-shadow: 2px 1px 5px black;
+        }
+      }
+    }
+  }
+}

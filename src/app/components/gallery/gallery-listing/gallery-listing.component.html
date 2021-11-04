@@ -1,0 +1,24 @@
+<app-header></app-header>
+<div class="container">
+    <section class="content">
+        <h1 i18n>Gallery listing</h1>
+        <p *ngIf="showLoginMessage" i18n>
+            Please log-in first.
+        </p>
+        <ul *ngIf="this.galleries">
+            <li *ngFor="let gallery of galleries">
+                <div class="gallery-card mat-elevation-z2">
+                    <div class="image-wrapper">
+                        <img src="{{gallery.coverImage}}" i18n-alt alt="Cover image of gallery named {{gallery.name}}">
+                        <div class="card-infobox">
+                            <h2 class="header-text">{{gallery.name}}</h2>
+                            <p>{{gallery.description}}</p>
+                        </div>
+                    </div>
+                    <button mat-flat-button color="primary" (click)="goToGallery(gallery.id)" i18n>Open gallery</button>
+                </div>
+            </li>
+        </ul>
+    </section>
+</div>
+

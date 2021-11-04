@@ -1,0 +1,167 @@
+@import 'src/assets/styles/vars.layout';
+
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  --main-color: #fcbc38;
+  --accent-color: #ffffff;
+  --grid-rows: 3;
+  --grid-row-height: 240px;
+
+  display: block;
+}
+
+
+::ng-deep app-header.hidden {
+  pointer-events: none;
+
+  .mat-toolbar.mat-primary {
+    z-index: 0;
+
+  }
+}
+
+
+.masonry {
+  margin: 0;
+  padding: $half-main-margin 0 0 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  @media (max-width: $layout-width) {
+    padding: $half-main-margin;
+  }
+}
+
+
+.column {
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.image-holder {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
+}
+
+img {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: auto;
+}
+
+.grid-item {
+  overflow: hidden;
+  border-radius: $double-border-radius;
+
+  &.loading {
+    position: relative;
+  }
+}
+
+mat-progress-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: -1;
+}
+
+.grid-item-scaling:not(.loading).focus,
+.grid-item-scaling:not(.loading):hover {
+  cursor: pointer;
+  transform-origin: center center;
+  animation-name: popout;
+  animation-duration: 300ms, 1200ms;
+  animation-delay: 0ms, 300ms;
+  animation-fill-mode: both, both;
+  animation-direction: normal, alternate;
+  animation-iteration-count: 1, infinite;
+  animation-timing-function: cubic-bezier(0.86, 0, 0.07, 1), ease-in-out;
+}
+
+.fullscreen .grid-item-scaling {
+  animation: none;
+}
+
+
+.masonry {
+  --scale-factor: 1;
+}
+
+.scale-factor-normal {
+  --scale-factor: 1;
+}
+
+.scale-factor-big {
+  --scale-factor: 1.25;
+}
+
+.scale-factor-grande {
+  --scale-factor: 2;
+}
+
+.grid-item-scaling {
+  --translate-x: 0;
+  --translate-y: 0;
+}
+
+.grid-item-scaling {
+  margin: 2px 1px;
+}
+
+.column:first-child {
+  .grid-item-scaling {
+    margin-left: 0;
+  }
+}
+
+.column:last-child {
+  .grid-item-scaling {
+    margin-right: 0;
+  }
+}
+
+@keyframes popout {
+  from {
+    box-shadow: inset 0 0 20px 10px rgba(0, 0, 0, 0.1);
+    transform: scale(calc(1 * var(--scale-factor)));
+  }
+  to {
+    box-shadow: 0 0 200px 10px rgba(0, 0, 0, 0.8);
+    transform: scale(calc(1.08 * var(--scale-factor))) translateX(var(--translate-x)) translateY(var(--translate-y));
+  }
+}
+
+@keyframes heartbeat1 {
+  0% {
+    box-shadow: 0 0 200px 10px rgba(0, 0, 0, 0.8);
+    transform: scale(calc(1.2 * var(--scale-factor)));
+  }
+  25% {
+    transform: scale(calc(1.245 * var(--scale-factor)));
+    box-shadow: 0 0 200px 10px rgba(0, 0, 0, 0.8);
+  }
+  50% {
+    transform: scale(calc(1.25 * var(--scale-factor)));
+    box-shadow: 0 0 200px 10px rgba(0, 0, 0, 0.8);
+  }
+  75% {
+    transform: scale(calc(1.255 * var(--scale-factor)));
+    box-shadow: 0 0 200px 10px rgba(0, 0, 0, 0.8);
+  }
+  100% {
+    transform: scale(calc(1.25 * var(--scale-factor)));
+    box-shadow: 0 0 200px 10px rgba(0, 0, 0, 0.8);
+  }
+}

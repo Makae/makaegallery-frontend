@@ -1,0 +1,15 @@
+<mat-form-field [formGroup]="formGroupRef" appearance="outline" floatLabel="always" class="{{ cssClass }}">
+    <mat-label>{{label}}</mat-label>
+    <input #inputField
+           matInput
+           type="{{inputType}}"
+           formControlName="{{this.formControlKey}}"
+           name="{{this.formControlKey}}"
+           [tabIndex]="inputTabIndex"
+           [placeholder]="this.placeholder"
+           (change)="onChange()"
+           (blur)="onBlur()"/>
+    <mat-error *ngFor="let error of errors">
+        {{ error }}
+    </mat-error>
+</mat-form-field>

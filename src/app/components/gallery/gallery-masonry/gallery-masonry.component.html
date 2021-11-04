@@ -1,0 +1,12 @@
+<app-header [class.hidden]="this.isFullscreen"></app-header>
+<app-gallery-fullscreen #galleryFullscreenComponent  [images]="images" [activeImageIdx]="0"></app-gallery-fullscreen>
+<div class="container masonry masonry-columns-{{columns.length}}" [class.fullscreen]="this.isFullscreen">
+    <div *ngFor="let column; let i = index of columns" class="column column-idx-{{i}}">
+        <div *ngFor="let image of column.images" class="grid-item grid-item-scaling {{image.cssClass}} mat-elevation-z2" [class.loading]="!image.loaded" (click)="image.loaded && showImageFullscreen(image)">
+            <img [src]="image.thumbnail_url" alt="{{image.id}}" loading="lazy" width="{{image?.dimensions?.width}}" height="{{image?.dimensions?.height}}" (load)="image.loaded = true"/>
+            <mat-progress-spinner mode="indeterminate"
+                *ngIf="!image.loaded"
+            ></mat-progress-spinner>
+        </div>
+    </div>
+</div>

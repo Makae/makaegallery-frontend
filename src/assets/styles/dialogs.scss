@@ -1,0 +1,23 @@
+@import 'src/assets/styles/vars.layout';
+
+mat-dialog-container.mat-dialog-container {
+  position: relative;
+}
+
+.dialog-container {
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .close-button {
+    position: relative;
+    top: -$half-main-margin;
+    right: -$half-main-margin;
+  }
+
+  mat-dialog-actions {
+    display: flex;
+    justify-content: end;
+  }
+}

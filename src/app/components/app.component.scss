@@ -1,0 +1,7 @@
+@import '/src/assets/styles/vars.layout';
+
+mat-toolbar.header-toolbar {
+  &.header-toolbar.hidden {
+    display: none;
+  }
+}

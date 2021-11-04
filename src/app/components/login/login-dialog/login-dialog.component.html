@@ -1,0 +1,35 @@
+<div class="dialog-container">
+    <div class="dialog-header">
+        <h2 mat-dialog-title>Login</h2>
+        <button class="close-button" tabindex="-1" mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <mat-dialog-content>
+        <form class="field-container vertical-field-wrapper" [formGroup]="formGroup" (ngSubmit)="formGroup.valid && onSubmit()">
+            <app-input
+                    [formGroupRef]="this.formGroup"
+                    [inputTabIndex]="1"
+                    [formControlKey]="loginFormFieldsEnum.USER_NAME"
+                    i18n-label label="User name"
+            ></app-input>
+            <app-input
+                    [formGroupRef]="this.formGroup"
+                    [inputTabIndex]="1"
+                    inputType="password"
+                    [formControlKey]="loginFormFieldsEnum.PASSWORD"
+                    i18n-label label="Password"
+            ></app-input>
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-flat-button
+                type="submit"
+                color="primary"
+                [disabled]="!formGroup.valid"
+                (click)="onSubmit()" i18n>
+            Login
+        </button>
+    </mat-dialog-actions>
+    <app-spinner *ngIf="isLoading"></app-spinner>
+</div>

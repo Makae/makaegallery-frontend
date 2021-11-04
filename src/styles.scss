@@ -1,0 +1,66 @@
+@use '~@angular/material' as mat;
+
+@include mat.core();
+
+$accent-color: #cc9028;
+$background-color: #f9f2e5;
+$makaegallery-palette: (
+        50: $background-color,
+        100: #f0debf,
+        200: #e6c894,
+        300: #dbb169,
+        400: #d4a148,
+        500: $accent-color,
+        600: #c78824,
+        700: #c07d1e,
+        800: #b97318,
+        900: #ad610f,
+        A100: #ffeddc,
+        A200: #ffd2a9,
+        A400: #ffb876,
+        A700: #ffaa5d,
+        contrast: (
+                50: rgba(black, 0.87),
+                100: rgba(black, 0.87),
+                200: rgba(black, 0.87),
+                300: #fafafa,
+                400: #fafafa,
+                500: #fafafa,
+                600: #fafafa,
+                700: #fafafa,
+                800: #fafafa,
+                900: #fafafa
+        )
+);
+
+$makaegallery-primary: mat.define-palette($makaegallery-palette, 500);
+$makaegallery-accent: mat.define-palette($makaegallery-palette, 900);
+$makaegallery-warn: mat.define-palette(mat.$red-palette);
+
+$makaegallery-theme: mat.define-light-theme((
+        color: (
+                primary: $makaegallery-primary,
+                accent: $makaegallery-accent,
+                warn: $makaegallery-warn,
+        )
+));
+
+$makaegallery-theme-dark: mat.define-dark-theme((
+        color: (
+                primary: $makaegallery-primary,
+                accent: $makaegallery-accent,
+                warn: $makaegallery-warn,
+        )
+));
+
+@include mat.all-component-themes($makaegallery-theme);
+
+.darkMode {
+  @include mat.all-component-colors($makaegallery-theme-dark);
+}
+
+@import 'src/assets/styles/base.scss';
+@import 'src/assets/styles/dialogs.scss';
+@import 'src/assets/styles/forms.scss';
+
+
