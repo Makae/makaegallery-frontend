@@ -30,8 +30,8 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
         server: ${{ secrets.SERVER }}
-        username: ${{ secrets.PROD_USER }}
-        password: ${{ secrets.PROD_PASSWORD }}
+        username: ${{ secrets.USER }}
+        password: ${{ secrets.PASSWORD }}
         local-dir: ./dist/
-        server-dir: ./site/wwwroot/
+        server-dir: ./
         dangerous-clean-slate: true
