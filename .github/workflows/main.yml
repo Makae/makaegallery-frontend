@@ -1,4 +1,4 @@
-name: Deploy prod site on push
+name: Manual deploy trigger site deploy
 
 on: 
   workflow_dispatch:
