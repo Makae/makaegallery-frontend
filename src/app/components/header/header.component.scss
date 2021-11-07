@@ -4,6 +4,11 @@
   display: none;
 }
 
+.toolbar-wrapper a {
+  text-decoration: none;
+  color: white !important;
+}
+
 .mat-toolbar {
   display: flex;
   justify-content: space-between;
