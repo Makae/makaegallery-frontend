@@ -46,6 +46,7 @@ export class LoginDialogComponent extends FormComponent implements OnInit {
       this.isLoading = false;
       if (successful) {
         this.dialogRef.close();
+
         return;
       } else {
         this.showCredentialsError = true;
@@ -54,4 +55,8 @@ export class LoginDialogComponent extends FormComponent implements OnInit {
   }
 
 
+  public closeDialog(): void {
+    this.dialogRef.close();
+
+  }
 }
