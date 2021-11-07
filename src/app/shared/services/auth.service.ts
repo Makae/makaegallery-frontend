@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BasicAuth, HttpClientService} from "./http-client.service";
-import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
+import {BehaviorSubject, EMPTY, Observable, Subject} from "rxjs";
 import {distinctUntilChanged} from 'rxjs/operators';
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
 import {AuthStatus} from '../models/auth-status-model';
@@ -51,8 +51,10 @@ export class AuthService {
     window.localStorage.removeItem(AuthService.STORAGE_KEY)
   }
 
-  public login(name: string, password: string): Observable<AuthStatus> {
+  public login(name: string, password: string): Observable<boolean> {
     this.httpClientService.setBasicAuthHeaders({name, password});
+
+    const subject = new Subject<boolean>();
 
     this.httpClientService.httpGet(
       `auth/status`
@@ -60,15 +62,22 @@ export class AuthService {
       complete: () => {
         AuthService.storeBasicAuthHeader({name, password});
         this.authStatusSubject.next({loggedIn: true});
+        subject.next(true);
+        subject.complete();
       },
       error: (response) => {
         AuthService.clearStoredBasicAuthHeader();
-        if (response.status === HttpStatusCode.Unauthorized) {
-          this.authStatusSubject.next({loggedIn: false});
+        if (response.status !== HttpStatusCode.Unauthorized) {
+          subject.error("Some issues with the backend!");
+          return;
         }
+
+        this.authStatusSubject.next({loggedIn: false});
+        subject.next(false);
+        subject.complete();
       }
     });
-    return this.authStatusChange();
+    return subject.asObservable();
   }
 
   public authStatusChange(): Observable<AuthStatus> {

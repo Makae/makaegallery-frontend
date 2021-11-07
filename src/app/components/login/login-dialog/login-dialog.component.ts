@@ -18,6 +18,7 @@ export enum LoginFormFields {
 export class LoginDialogComponent extends FormComponent implements OnInit {
   public readonly loginFormFieldsEnum = LoginFormFields;
   public isLoading = false;
+  public showCredentialsError = false;
 
   public constructor(
     public dialogRef: MatDialogRef<LoginDialogComponent>,
@@ -36,13 +37,19 @@ export class LoginDialogComponent extends FormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-      this.isLoading = true;
+    this.isLoading = true;
+    this.showCredentialsError = false;
     this.authService.login(
       this.getTrimmedFieldValue(LoginFormFields.USER_NAME),
       this.getTrimmedFieldValue(LoginFormFields.PASSWORD)
-    ).subscribe(() => {
+    ).subscribe((successful) => {
       this.isLoading = false;
-      this.dialogRef.close();
+      if (successful) {
+        this.dialogRef.close();
+        return;
+      } else {
+        this.showCredentialsError = true;
+      }
     });
   }
 
