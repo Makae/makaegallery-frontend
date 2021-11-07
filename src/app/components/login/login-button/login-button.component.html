@@ -1,6 +1,6 @@
 <button *ngIf="(loggedIn | async) === false" mat-raised-button color="accent" (click)="onLoginClick()">
-    Login
+    Anmelden
 </button>
 <button *ngIf="(loggedIn | async) === true" mat-raised-button color="warn" (click)="onLogoutClick()">
-    Logout
+    Abmelden
 </button>

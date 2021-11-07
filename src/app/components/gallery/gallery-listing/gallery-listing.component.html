@@ -1,9 +1,9 @@
 <app-header></app-header>
 <div class="container">
     <section class="content">
-        <h1 i18n>Gallery listing</h1>
+        <h1 i18n>Galerien</h1>
         <p *ngIf="showLoginMessage" i18n>
-            Please log-in first.
+            Bitte zuerst anmelden.
         </p>
         <ul *ngIf="this.galleries">
             <li *ngFor="let gallery of galleries">
@@ -15,7 +15,7 @@
                             <p>{{gallery.description}}</p>
                         </div>
                     </div>
-                    <button mat-flat-button color="primary" (click)="goToGallery(gallery.id)" i18n>Galerie öffnen</button>
+                    <button mat-flat-button color="primary" (click)="goToGallery(gallery.id)" i18n>Album öffnen</button>
                 </div>
             </li>
         </ul>
