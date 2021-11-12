@@ -10,6 +10,12 @@ html, body {
 .app-container {
   margin: 0 auto;
   max-width: $layout-width;
+
+  &.fullscreen {
+    max-width: initial;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .content {

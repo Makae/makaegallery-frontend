@@ -26,6 +26,7 @@ import {MatCardModule} from '@angular/material/card';
 import {HeaderComponent} from './components/header/header.component';
 import {GalleryFullscreenComponent} from './components/gallery/gallery-fullscreen/gallery-fullscreen.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {MatMenuModule} from '@angular/material/menu';
     GalleryListingComponent,
     GalleryMasonryComponent,
     GalleryFullscreenComponent,
-    HeaderComponent
+    HeaderComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,

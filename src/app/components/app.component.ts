@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {map} from 'rxjs/operators';
-import {AuthService} from '../shared/services/auth.service';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {DisplayService} from '../shared/services/display.service';
 
 @Component({
   selector: 'app-root',
@@ -9,20 +8,24 @@ import {AuthService} from '../shared/services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public loggedIn?: Observable<boolean>;
+  public showFullscreen = false;
 
   public constructor(
-    public authService: AuthService
+    private readonly displayService: DisplayService,
+    private readonly router: Router
   ) {
+    displayService.settingsChange().subscribe((settings) => {
+      this.showFullscreen = settings.fullscreen;
+    });
 
+    router.events.subscribe((val) => {
+      if(val instanceof NavigationStart) {
+        this.showFullscreen = false;
+      }
+    })
   }
 
   public ngOnInit(): void {
-    this.loggedIn = this.authService
-      .authStatusChange()
-      .pipe(
-        map((authStatus) => !!authStatus.loggedIn)
-      );
   }
 
 }

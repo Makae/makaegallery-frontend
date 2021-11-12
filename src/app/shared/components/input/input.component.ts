@@ -134,4 +134,6 @@ export class InputComponent implements ControlValueAccessor, OnChanges, OnInit, 
   private propagateTouched: (value: string | undefined) => void = (value: string | undefined) => {
     // stub
   };
+  @Input()
+  public matStyle = 'outline';
 }
