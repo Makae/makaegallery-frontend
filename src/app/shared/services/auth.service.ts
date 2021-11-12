@@ -86,6 +86,10 @@ export class AuthService {
     );
   }
 
+  public getAuthStatus(): AuthStatus {
+    return this.authStatusSubject.getValue();
+  }
+
   public logout(): Observable<void> {
     this.httpClientService.clearBasicAuthHeaders();
     AuthService.clearStoredBasicAuthHeader();

@@ -104,3 +104,21 @@ img {
     }
   }
 }
+
+.hide-top,
+.hide-bottom {
+  transition: opacity 0.35s, transform 0.35s;
+}
+
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hide-top.hidden {
+  transform: translateY(-5vh);
+}
+
+.hide-bottom.hidden {
+  transform: translateY(5vh);
+}

@@ -1,17 +1,11 @@
-import {Component, Input, OnDestroy} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Image} from '../../../shared/models/gallery-model';
 import {DomSanitizer} from '@angular/platform-browser';
-import {fromEvent, interval, Subscription} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
+import {fromEvent, interval, of, Subscription, timer} from 'rxjs';
+import {debounceTime, filter, map, startWith, switchMap, tap} from 'rxjs/operators';
 
 interface DisplayedImage extends Image {
   cssClass: string;
-}
-
-interface DisplayedColumn {
-  images: DisplayedImage[];
-  imageCount: number;
-  heightSum: number;
 }
 
 type CallbackFn = () => void;
@@ -21,24 +15,25 @@ type CallbackFn = () => void;
   templateUrl: './gallery-fullscreen.component.html',
   styleUrls: ['./gallery-fullscreen.component.scss']
 })
-export class GalleryFullscreenComponent implements OnDestroy {
-  private readonly  DEFAULT_DURATION = 6000;
-  public readonly MIN_DURATION =  1000;
-  public readonly CHANGE_DURATION_SIZE =  500;
-
-  public visible = false;
-
-  @Input()
-  public playbackDuration = this.DEFAULT_DURATION;
+export class GalleryFullscreenComponent implements OnInit, OnDestroy {
+  public readonly MIN_DURATION = 1000;
+  public readonly CHANGE_DURATION_SIZE = 500;
+  public readonly CONTROLS_HIDE_DELAY = 1400;
 
   @Input()
   public images: DisplayedImage[] = [];
-
   @Input()
   public activeImageIdx: number = 0;
+  @Input()
+
+  public visible = false;
   public image?: DisplayedImage;
   public timerProgress = 0;
   public isPlaying = false;
+  public showControls = true;
+  private readonly DEFAULT_DURATION = 6000;
+  public playbackDuration = this.DEFAULT_DURATION;
+  private showControlsSubscription?: Subscription;
   private playbackSubscription?: Subscription;
   private keyHandlingSubscription?: Subscription;
   private afterCloseCallback?: CallbackFn;
@@ -49,19 +44,18 @@ export class GalleryFullscreenComponent implements OnDestroy {
   }
 
   private static enableScrolling(): void {
-    const body = document.querySelector('body');
-    if (!body) {
-      return;
-    }
-    body.style.overflow = 'auto';
+    GalleryFullscreenComponent.getBody()!.style.overflow = 'auto';
   }
 
   private static disableScrolling(): void {
-    const body = document.querySelector('body');
-    if (!body) {
-      return;
-    }
-    body.style.overflow = 'hidden';
+    GalleryFullscreenComponent.getBody()!.style.overflow = 'hidden';
+  }
+
+  private static getBody(): HTMLBodyElement | null {
+    return document.querySelector('body');
+  }
+
+  public ngOnInit(): void {
   }
 
   public ngOnDestroy(): void {
@@ -96,6 +90,7 @@ export class GalleryFullscreenComponent implements OnDestroy {
     this.showImage(idx ?? 0);
     GalleryFullscreenComponent.disableScrolling();
     this.bindKeyboardInputHandling();
+    this.bindMouseInputHandling();
 
     return {
       afterClose: (cbk: CallbackFn) => {
@@ -106,16 +101,6 @@ export class GalleryFullscreenComponent implements OnDestroy {
 
   public close() {
     this.destroy();
-  }
-
-  private destroy() {
-    this.pausePlayback();
-    this.visible = false;
-    GalleryFullscreenComponent.enableScrolling();
-    this.unsubscribeAll();
-
-    this.afterCloseCallback?.call(this);
-    this.afterCloseCallback = undefined;
   }
 
   public previous() {
@@ -146,12 +131,50 @@ export class GalleryFullscreenComponent implements OnDestroy {
     window.open(image.original_url, "_blank", image.id);
   }
 
+  public changePlaybackSpeedClicked($event: MouseEvent, amount: number): void {
+    $event.stopImmediatePropagation();
+    const duration = this.playbackDuration + amount;
+    this.playbackDuration = Math.max(this.MIN_DURATION, duration);
+  }
+
+  private destroy() {
+    this.pausePlayback();
+    this.visible = false;
+    GalleryFullscreenComponent.enableScrolling();
+    this.unsubscribeAll();
+
+    this.afterCloseCallback?.call(this);
+    this.afterCloseCallback = undefined;
+  }
+
   private showImage(imageIdx: number) {
     this.activeImageIdx = Math.max(0, Math.min(imageIdx, this.images.length - 1));
     this.image = this.images[imageIdx];
   }
 
+  private bindMouseInputHandling(): void {
+    this.showControlsSubscription?.unsubscribe();
+
+    this.showControlsSubscription =
+      fromEvent(document, 'mousemove').pipe(
+        tap(() => this.showControls = true),
+        map(event => {
+          if(event === null) {
+            return 'queue-hide';
+          }
+          return (event.target as HTMLElement)?.closest(".hide-top,.hide-bottom") === null ? 'queue-hide': 'no-queue-hide';
+        }),
+        // Do not trigger hide after X seconds if cursor is on a control element
+        switchMap((mode) => mode === 'queue-hide' ? timer(this.CONTROLS_HIDE_DELAY) : of()),
+        startWith(null)
+      ).subscribe((status) => {
+        this.showControls = false;
+      });
+  }
+
   private bindKeyboardInputHandling(): void {
+    this.keyHandlingSubscription?.unsubscribe();
+
     this.keyHandlingSubscription = fromEvent<KeyboardEvent>(document, 'keyup').pipe(
       debounceTime(200)
     ).subscribe((event) => {
@@ -169,7 +192,7 @@ export class GalleryFullscreenComponent implements OnDestroy {
           break;
         case " ":
         case "Enter":
-          if(this.isPlaying) {
+          if (this.isPlaying) {
             this.pausePlayback();
           } else {
             this.startPlayback()
@@ -182,11 +205,6 @@ export class GalleryFullscreenComponent implements OnDestroy {
   private unsubscribeAll(): void {
     this.keyHandlingSubscription?.unsubscribe();
     this.playbackSubscription?.unsubscribe();
-  }
-
-  public changePlaybackSpeedClicked($event: MouseEvent, amount: number): void {
-    $event.stopImmediatePropagation();
-    const duration = this.playbackDuration + amount;
-    this.playbackDuration = Math.max(this.MIN_DURATION, duration);
+    this.showControlsSubscription?.unsubscribe();
   }
 }

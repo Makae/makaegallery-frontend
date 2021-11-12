@@ -1,5 +1,5 @@
 <div class="overlay" [class.visible]="this.visible">
-    <div class="overlay-settings" *ngIf="image">
+    <div class="overlay-settings hide-top" [class.hidden]="!this.showControls" *ngIf="image">
         <button mat-mini-fab color="primary" [mat-menu-trigger-for]="settingsMenu">
             <mat-icon>settings</mat-icon>
         </button>
@@ -18,7 +18,7 @@
             </div>
         </mat-menu>
     </div>
-    <div class="overlay-top-bar">
+    <div class="overlay-top-bar hide-top" [class.hidden]="!this.showControls">
         <button *ngIf="image" mat-mini-fab color="primary" (click)="showOriginalImage($event, image)">
             <mat-icon>download</mat-icon>
         </button>
@@ -29,7 +29,7 @@
     <div class="image-container" *ngIf="image">
         <img class="mat-elevation-z10" [src]="image?.optimized_url" alt="{{image?.id}}"/>
     </div>
-    <div class="overlay-footer">
+    <div class="overlay-footer hide-bottom" [class.hidden]="!this.showControls">
         <div class="start-stop">
             <button mat-mini-fab color="primary" (click)="previous()">
                 <mat-icon *ngIf="this.activeImageIdx <= 0">skip_previous</mat-icon>

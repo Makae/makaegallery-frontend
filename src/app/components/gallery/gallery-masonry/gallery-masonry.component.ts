@@ -3,7 +3,6 @@ import {GalleryService} from '../../../shared/services/gallery.service';
 import {ActivatedRoute} from '@angular/router';
 import {filter, map, switchMap} from 'rxjs/operators';
 import {Image} from '../../../shared/models/gallery-model';
-import {CapabilityService} from '../../../shared/services/capability.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {GalleryFullscreenComponent} from '../gallery-fullscreen/gallery-fullscreen.component';
 
@@ -37,20 +36,10 @@ export class GalleryMasonryComponent implements OnInit {
   public constructor(
     public galleryService: GalleryService,
     public activatedRoute: ActivatedRoute,
-    public capabilityService: CapabilityService,
     public sanitizer: DomSanitizer
   ) {
-    capabilityService.screenDimensionChanged().subscribe((screenDimensions) => {
-      //this.containerWidth = Math.ceil(screenDimensions.width / this.width) * this.width;
-      //console.log(screenDimensions.width, this.width, this.containerWidth);
-    });
   }
 
-  /*  private static mapImageToMasonryImage(image: Image): IMasonryGalleryImage {
-      return {
-        imageUrl: image.thumbnail_url
-      }
-    }*/
   private static mapImageToDisplayedImage(image: Image): DisplayedImage {
     return {
       ...image,
