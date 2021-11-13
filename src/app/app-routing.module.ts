@@ -8,7 +8,7 @@ import {LandingPageComponent} from './components/landing-page/landing-page.compo
 const routes: Routes = [
   {path: 'gallery/:galleryId', component: GalleryMasonryComponent, canActivate: [AuthGuard]},
   {path: 'galleries', component: GalleryListingComponent, canActivate: [AuthGuard]},
-  {path: '', component: GalleryListingComponent}
+  {path: '', component: LandingPageComponent}
 ];
 
 @NgModule({

@@ -1,36 +1,61 @@
-<div class="background-wrapper">
-    <div class="form-wrapper">
-        <h3>Jolanda & Martin</h3>
-        <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && onSubmit()">
-            <mat-dialog-content>
-                <div class="field-container vertical-field-wrapper">
-                    <app-input
-                            [formGroupRef]="this.formGroup"
-                            [inputTabIndex]="1"
-                            [formControlKey]="loginFormFieldsEnum.USER_NAME"
-                            i18n-label label="Benutzername"
-                    ></app-input>
-                    <app-input
-                            [formGroupRef]="this.formGroup"
-                            [inputTabIndex]="2"
-                            inputType="password"
-                            [formControlKey]="loginFormFieldsEnum.PASSWORD"
-                            i18n-label label="Passwort"
-                    ></app-input>
-                    <mat-error *ngIf="showCredentialsError">
-                        Benutzername oder Passwort falsch!
-                    </mat-error>
-                </div>
-            </mat-dialog-content>
-            <mat-dialog-actions>
-                <button mat-flat-button
-                        type="submit"
-                        color="primary"
-                        [disabled]="!formGroup.valid"
-                        (click)="onSubmit()" i18n>
-                    Anmelden
-                </button>
-            </mat-dialog-actions>
-        </form>
+<section class="hero">
+    <div class="background-wrapper">
+        <div class="content-wrapper">
+            <h1>Jolanda & Martin</h1>
+            <p>Merci vi mou!</p>
+        </div>
     </div>
-</div>
+</section>
+<!--
+<section class="video-and-gallery-link">
+    <div class="content-wrapper">
+        <div class="vertical-wrapper">
+            <div class="video-wrapper">
+                <img src="assets/images/video-teaser.jpg" alt="Video teaser"/>
+                <mat-icon>play</mat-icon>
+                <video width="480" controls>
+                    <source src="assets/videos/slideshow-jum.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="form-wrapper">
+                <h3>Jolanda & Martin</h3>
+                <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && onSubmit()">
+                    <mat-dialog-content>
+                        <div class="field-container vertical-field-wrapper">
+                            <app-input
+                                    [formGroupRef]="this.formGroup"
+                                    [inputTabIndex]="1"
+                                    [formControlKey]="loginFormFieldsEnum.USER_NAME"
+                                    i18n-label label="Benutzername"
+                            ></app-input>
+                            <app-input
+                                    [formGroupRef]="this.formGroup"
+                                    [inputTabIndex]="2"
+                                    inputType="password"
+                                    [formControlKey]="loginFormFieldsEnum.PASSWORD"
+                                    i18n-label label="Passwort"
+                            ></app-input>
+                            <mat-error *ngIf="showCredentialsError">
+                                Benutzername oder Passwort falsch!
+                            </mat-error>
+                        </div>
+                    </mat-dialog-content>
+                    <mat-dialog-actions>
+                        <button mat-flat-button
+                                type="submit"
+                                color="primary"
+                                [disabled]="!formGroup.valid"
+                                (click)="onSubmit()" i18n>
+                            Anmelden
+                        </button>
+                    </mat-dialog-actions>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="thanks">
+
+</section>
+-->
