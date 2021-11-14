@@ -6,7 +6,7 @@
             Bitte zuerst anmelden.
         </p>
         <ul *ngIf="this.galleries">
-            <li *ngFor="let gallery of galleries">
+            <li *ngFor="let gallery of galleries" (click)="goToGallery(gallery.id)">
                 <div class="gallery-card mat-elevation-z2">
                     <div class="image-wrapper">
                         <img src="{{gallery.coverImage}}" i18n-alt alt="Cover image of gallery named {{gallery.name}}">
@@ -15,7 +15,7 @@
                             <p>{{gallery.description}}</p>
                         </div>
                     </div>
-                    <button mat-flat-button color="primary" (click)="goToGallery(gallery.id)" i18n>Album öffnen</button>
+                    <button mat-flat-button color="primary" i18n>Album öffnen</button>
                 </div>
             </li>
         </ul>
