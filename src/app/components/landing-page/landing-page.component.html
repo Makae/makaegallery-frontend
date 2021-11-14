@@ -5,21 +5,25 @@
             <p>Merci vi mou!</p>
         </div>
     </div>
+    <a class="more-button" href="#video-and-gallery-link">
+        <div>Zu dä Biuder!</div>
+        <mat-icon>arrow_downward</mat-icon>
+    </a>
 </section>
-<!--
-<section class="video-and-gallery-link">
+
+<section class="video-and-gallery-link" id="video-and-gallery-link">
     <div class="content-wrapper">
-        <div class="vertical-wrapper">
-            <div class="video-wrapper">
-                <img src="assets/images/video-teaser.jpg" alt="Video teaser"/>
-                <mat-icon>play</mat-icon>
-                <video width="480" controls>
-                    <source src="assets/videos/slideshow-jum.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+        <a class="video-wrapper" href="assets/videos/slideshow-jum.mp4" target="_blank">
+            <div class="video-infos">
+                <mat-icon>play_circle_filled</mat-icon>
+                <p>Slideshow startä</p>
             </div>
-            <div class="form-wrapper">
-                <h3>Jolanda & Martin</h3>
+        </a>
+        <div class="gallery-cta">
+            <div>
+                <h2>Für üsi Gäscht</h2>
+                <p>Merci siter derbii gsi! <br/> Hie chöiter no meh Biuder ahluege vor
+                    <a href="https://www.jeaninecphotography.ch/" target="_blank">Fotografin</a> und der Fotibox.</p>
                 <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && onSubmit()">
                     <mat-dialog-content>
                         <div class="field-container vertical-field-wrapper">
@@ -27,7 +31,7 @@
                                     [formGroupRef]="this.formGroup"
                                     [inputTabIndex]="1"
                                     [formControlKey]="loginFormFieldsEnum.USER_NAME"
-                                    i18n-label label="Benutzername"
+                                    i18n-label label="Benutzernamä"
                             ></app-input>
                             <app-input
                                     [formGroupRef]="this.formGroup"
@@ -47,7 +51,7 @@
                                 color="primary"
                                 [disabled]="!formGroup.valid"
                                 (click)="onSubmit()" i18n>
-                            Anmelden
+                            Witer zu de Galeriä
                         </button>
                     </mat-dialog-actions>
                 </form>
@@ -58,4 +62,4 @@
 <section class="thanks">
 
 </section>
--->
+

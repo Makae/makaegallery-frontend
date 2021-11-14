@@ -56,4 +56,8 @@ export class LandingPageComponent extends FormComponent implements OnInit {
     });
   }
 
+  public onViewGalleriesClick(): void {
+    
+  }
+
 }

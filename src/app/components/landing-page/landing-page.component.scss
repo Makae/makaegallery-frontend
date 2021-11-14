@@ -1,6 +1,7 @@
 @import 'src/assets/styles/vars.layout';
 
-$hero-color: #eaeaea;
+$hero-color: rgba(233, 233, 233);
+$bubble-size: 192px;
 
 section {
   width: 100vw;
@@ -8,8 +9,10 @@ section {
 }
 
 .hero {
+  position: relative;
   box-sizing: border-box;
   padding-bottom: 96px;
+  overflow: hidden;
 
   .background-wrapper {
     width: 100%;
@@ -25,47 +28,134 @@ section {
     .content-wrapper {
       margin: 0 auto;
       color: $hero-color;
+
+      h1, p {
+        font-size: 48px;
+        font-family: "Amatic SC", arial, sans-serif;
+        word-break: keep-all;
+        white-space: nowrap;
+        text-align: center;
+      }
+
       h1 {
         display: inline-block;
-        border-top: 1px solid $hero-color;
-        border-bottom: 1px solid $hero-color;
-        line-height: 2em;
+        padding: 0 0.5em;
+        border-top: 2px solid $hero-color;
+        border-bottom: 2px solid $hero-color;
         vertical-align: center;
+
+        font-size: 78px;
+        line-height: 1.5em;
+      }
+
+      p {
+        line-height: 1.25em;
       }
     }
+  }
 
+  .more-button {
+    bottom: -$bubble-size / 2;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-top: $bubble-size / 5;
+    position: absolute;
+    width: $bubble-size;
+    height: $bubble-size;
+    box-sizing: border-box;
+    display: flex;
+    gap: $bubble-size / 24;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    text-align: center;
+    text-decoration: none !important;
+    border-radius: $bubble-size / 2;
+    background-color: rgba(185, 115, 24, 0.85);
+    color: #f9f2e5;
 
+    font-family: "Amatic SC", arial, sans-serif;
+    font-size: 1.5rem;
+
+    &:after {
+      z-index: -1;
+      content: " ";
+      position: absolute;
+      background-color: rgba(185, 115, 24, 0.85);
+      width: $bubble-size;
+      height: $bubble-size;
+      border-radius: 1000px;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+
+      animation: ripple 1.25s infinite alternate;
+    }
+
+    mat-icon {
+      animation: jump 0.8s alternate infinite ease-in-out;
+    }
   }
 
 }
 
 
 .video-and-gallery-link {
+  box-sizing: border-box;
+  padding: 5vh 5vw;
+
   .content-wrapper {
     display: flex;
     flex-direction: row;
-    padding-bottom: 10vh;
     gap: $half-main-margin;
     justify-content: center;
+    align-items: stretch;
+    height: 340px;
   }
+
 
   .video-wrapper {
+    flex: 1;
     position: relative;
-    max-width: 390px;
+    display: block;
+    max-width: 600px;
+    overflow: hidden;
+    cursor: pointer;
+    background-image: url("~src/assets/images/video-teaser-darker-2.jpg");
+    filter: blur(1);
+    background-size: cover;
+    border-radius: $border-radius;
 
-    img, video {
-      width: 100%;
-    }
 
-    img {
+    .video-infos {
       position: absolute;
-      left: 0;
-      top: 0;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      color: #f9f2e5;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 1rem;
+      font-family: "Amatic SC", arial, sans-serif;
+      font-size: 2rem;
+
+      P {
+        text-shadow: 2px 2px 4px #000000c2;
+      }
+    }
+    mat-icon {
       z-index: 10;
+      font-size: 5rem;
+      width: 5rem;
+      height: 5rem;
+      color: rgba(249, 242, 229, 0.90);
     }
   }
 
-  .form-wrapper {
+  .gallery-cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 12px;
     background-color: rgba(255, 255, 255, 0.70);
     border-radius: $border-radius;
@@ -74,5 +164,48 @@ section {
     button {
       width: 100%;
     }
+  }
+
+  @media (max-width: 840px) {
+    .content-wrapper {
+      flex-direction: column;
+      justify-content: inherit;
+      align-items: inherit;
+
+      .video-wrapper {
+        width: 100%;
+        padding-bottom: 66.66%;
+        max-width: none;
+        background-size: contain;
+      }
+
+      .gallery-cta {
+        width: auto;
+        text-align: center;
+      }
+    }
+  }
+}
+
+
+@keyframes jump {
+  from {
+    transform: translateY(-10%);
+  }
+  to {
+    transform: translateY(10%);
+  }
+}
+
+@keyframes ripple {
+  from {
+    opacity: 0.5;
+    width: $bubble-size * 1;
+    height: $bubble-size * 1;
+  }
+  to {
+    opacity: 0;
+    width: $bubble-size * 1.2;
+    height: $bubble-size * 1.2;
   }
 }
