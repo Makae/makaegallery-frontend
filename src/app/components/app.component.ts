@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
     });
 
     router.events.subscribe((event) => {
-      if(event instanceof NavigationStart && event.url.split('#')[0] !== '/' ) {
+      if(event instanceof NavigationEnd && event.url.split('#')[0] !== '/' ) {
         this.showFullscreen = false;
       }
     })

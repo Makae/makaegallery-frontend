@@ -4,6 +4,7 @@ import {AuthService} from '../../../shared/services/auth.service';
 import {map} from 'rxjs/operators';
 import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login-button',
@@ -16,7 +17,9 @@ export class LoginButtonComponent implements OnInit {
 
   public constructor(
     public authService: AuthService,
-    public loginDialog: MatDialog) {
+    public loginDialog: MatDialog,
+    public router: Router
+  ) {
   }
 
 
@@ -36,7 +39,7 @@ export class LoginButtonComponent implements OnInit {
     this.authService.logout().subscribe({
       complete: () => {
         this.loginDialog.closeAll();
-        window.location.reload();
+        this.router.navigateByUrl('/');
       }
     });
   }
