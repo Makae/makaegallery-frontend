@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero mat-elevation-z3">
     <div class="background-wrapper">
         <div class="content-wrapper">
             <h1>Jolanda & Martin</h1>
@@ -11,17 +11,18 @@
     </a>
 </section>
 
-<section class="video-and-gallery-link" id="video-and-gallery-link">
+<section id="video-and-gallery-link" class="video-and-gallery-link">
+    <h1>Sildeshow + Galerien</h1>
     <div class="content-wrapper">
-        <a class="video-wrapper" href="assets/videos/slideshow-jum.mp4" target="_blank">
+        <a class="video-wrapper mat-elevation-z3" href="assets/videos/slideshow-jum.mp4" target="_blank">
             <div class="video-infos">
                 <mat-icon>play_circle_filled</mat-icon>
                 <p>Slideshow startä</p>
             </div>
         </a>
-        <div class="gallery-cta">
+        <div class="gallery-cta mat-elevation-z1">
             <div>
-                <h2>Für üsi Gäscht</h2>
+                <h2>Für üsi Gescht</h2>
                 <p>Merci siter derbii gsi! <br/> Hie chöiter no meh Biuder ahluege vor
                     <a href="https://www.jeaninecphotography.ch/" target="_blank">Fotografin</a> und der Fotibox.</p>
                 <form [formGroup]="formGroup" (ngSubmit)="formGroup.valid && onSubmit()">
@@ -59,7 +60,48 @@
         </div>
     </div>
 </section>
-<section class="thanks">
 
+<section class="thanks">
+    <h1>Fotografin & Catering</h1>
+    <div class="content-wrapper">
+        <mat-card class="entry mat-elevation-z3">
+            <div>
+                <mat-card-header>
+                    <mat-card-title>Jeanine C. Photography</mat-card-title>
+                    <mat-card-subtitle>Photographin</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="assets/images/cropped-LogoJeanine_gold-neu-300x300.png" alt="Logo of photographer">
+                <mat-card-content>
+                    <p>Jeanine het üs während üsem Fest begleitet und defür gsorgt das mir no lang mit glückleche
+                        Gedanke
+                        chöi a üses Fest zrügg dänke.
+                        <br/> Merci Jeanine!</p>
+                </mat-card-content>
+            </div>
+            <mat-card-actions>
+                <a href="https://www.jeaninecphotography.ch/" target="_blank">
+                    <button mat-flat-button color="primary">Mehr zu Jeanine</button>
+                </a>
+            </mat-card-actions>
+        </mat-card>
+        <mat-card class="entry mat-elevation-z3">
+            <div>
+                <mat-card-header>
+                    <mat-card-title>Das FoodLab</mat-card-title>
+                    <mat-card-subtitle>Apéro und Znacht</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="assets/images/foodlab-trailer-300x300.jpg" alt="Logo of Das Foodlab">
+                <mat-card-content>
+                    <p>Anca und Justin hei üs mit eim ne super Apéro und extra-leckerä Burger wunderbar versorgt!<br/>Dankä
+                        schön!</p>
+                </mat-card-content>
+            </div>
+            <mat-card-actions>
+                <a href="https://www.dasfoodlab.ch/private-events" target="_blank">
+                    <button mat-flat-button color="primary">Meh zum FoodLab</button>
+                </a>
+            </mat-card-actions>
+        </mat-card>
+    </div>
 </section>
 

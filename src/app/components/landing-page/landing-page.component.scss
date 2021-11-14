@@ -4,15 +4,36 @@ $hero-color: rgba(233, 233, 233);
 $bubble-size: 192px;
 
 section {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  margin-top: 24px;
+
+  h1 {
+    font-family: "Amatic SC", arial, sans-serif;
+    font-size: 3em;
+    line-height: 1.25em;
+  }
+
+  h2,
+  mat-card-title {
+    font-family: "Amatic SC", arial, sans-serif;
+    font-size: 1.8em;
+    line-height: 1.2em;
+    color: #ad610f;
+  }
+
 }
 
 .hero {
+  margin-top: 0;
+  height: 100vh;
   position: relative;
   box-sizing: border-box;
   padding-bottom: 96px;
   overflow: hidden;
+
+  h1 {
+    color: $hero-color;
+  }
 
   .background-wrapper {
     width: 100%;
@@ -28,30 +49,31 @@ section {
     .content-wrapper {
       margin: 0 auto;
       color: $hero-color;
-
-      h1, p {
-        font-size: 48px;
-        font-family: "Amatic SC", arial, sans-serif;
-        word-break: keep-all;
-        white-space: nowrap;
-        text-align: center;
-      }
-
-      h1 {
-        display: inline-block;
-        padding: 0 0.5em;
-        border-top: 2px solid $hero-color;
-        border-bottom: 2px solid $hero-color;
-        vertical-align: center;
-
-        font-size: 78px;
-        line-height: 1.5em;
-      }
-
-      p {
-        line-height: 1.25em;
-      }
     }
+
+    h1, p {
+      font-size: 48px;
+      font-family: "Amatic SC", arial, sans-serif;
+      word-break: keep-all;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    h1 {
+      display: inline-block;
+      padding: 0 0.5em;
+      border-top: 2px solid $hero-color;
+      border-bottom: 2px solid $hero-color;
+
+      font-size: 78px;
+      line-height: 1.5em;
+    }
+
+    p {
+      line-height: 1.25em;
+    }
+
+
   }
 
   .more-button {
@@ -97,18 +119,34 @@ section {
     }
   }
 
+  @media (max-width: 600px) {
+    & {
+      height: 120vw;
+
+      .background-wrapper {
+        h1 {
+          font-size: 10vw;
+        }
+
+        p {
+          font-size: 8vw;
+        }
+
+      }
+    }
+  }
+
 }
 
-
 .video-and-gallery-link {
+  padding: 2vh 10vw;
   box-sizing: border-box;
-  padding: 5vh 5vw;
 
   .content-wrapper {
     display: flex;
     flex-direction: row;
     gap: $half-main-margin;
-    justify-content: center;
+    justify-content: start;
     align-items: stretch;
     height: 340px;
   }
@@ -143,6 +181,7 @@ section {
         text-shadow: 2px 2px 4px #000000c2;
       }
     }
+
     mat-icon {
       z-index: 10;
       font-size: 5rem;
@@ -162,6 +201,7 @@ section {
     width: 200px;
 
     button {
+      margin-top: -13px;
       width: 100%;
     }
   }
@@ -177,6 +217,7 @@ section {
         padding-bottom: 66.66%;
         max-width: none;
         background-size: contain;
+
       }
 
       .gallery-cta {
@@ -185,8 +226,68 @@ section {
       }
     }
   }
+
+  @media (max-width: 700px) {
+    .video-wrapper {
+      mat-icon {
+        font-size: 18vw;
+        width: 18vw;
+        height: 18vw;
+        line-height: 18vw;
+      }
+    }
+
+    .video-infos p {
+      font-size: 8vw;
+      line-height: 1.3em;
+    }
+  }
 }
 
+.thanks {
+  padding: 2vh 10vw;
+  box-sizing: border-box;
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: stretch;
+    gap: $half-main-margin;
+
+    .entry {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 300px;
+      border-radius: $border-radius;
+
+      img {
+        height: 300px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .mat-card-header-text {
+      margin-left: 0;
+    }
+    .mat-card-image {
+      width: 300px;
+      margin: 0;
+    }
+
+    .mat-card-content {
+      p {
+        margin-top: 12px;
+      }
+    }
+  }
+}
 
 @keyframes jump {
   from {

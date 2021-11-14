@@ -4,8 +4,16 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
   scroll-behavior: smooth;
+  font: 400 15px / 20px Dosis;
+}
+
+html, body {
+  .mat-card-subtitle,
+  .mat-card-content,
+  .mat-typography {
+    font-size: 15px;
+  }
 }
 
 .app-container {

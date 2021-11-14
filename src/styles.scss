@@ -53,6 +53,12 @@ $makaegallery-theme-dark: mat.define-dark-theme((
         )
 ));
 
+$makae-typography-config: mat.define-typography-config(
+        $font-family: Dosis
+);
+
+@include mat.core($makae-typography-config);
+
 @include mat.all-component-themes($makaegallery-theme);
 
 .darkMode {
