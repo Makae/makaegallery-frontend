@@ -13,6 +13,7 @@ ul {
   li {
     box-sizing: border-box;
     flex: 0 1 25%;
+    cursor: pointer;
 
     .gallery-card {
       position: relative;
@@ -33,8 +34,8 @@ ul {
 
         img {
           object-fit: cover;
-          width:100%;
-          height:100%;
+          width: 100%;
+          height: 100%;
         }
 
         .header-text {
