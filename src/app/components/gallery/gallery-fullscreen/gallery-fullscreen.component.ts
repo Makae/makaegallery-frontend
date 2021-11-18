@@ -18,7 +18,7 @@ type CallbackFn = () => void;
 export class GalleryFullscreenComponent implements OnInit, OnDestroy {
   public readonly MIN_DURATION = 1000;
   public readonly CHANGE_DURATION_SIZE = 500;
-  public readonly CONTROLS_HIDE_DELAY = 1400;
+  public readonly CONTROLS_HIDE_DELAY = 2000;
   @Input()
   public images: DisplayedImage[] = [];
   @Input()
@@ -170,13 +170,14 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
           if (event === null) {
             return 'queue-hide';
           }
+          // Do not trigger hide after X seconds if cursor is on a control element
           return (event.target as HTMLElement)?.closest(".hide-top,.hide-bottom") === null ? 'queue-hide' : 'no-queue-hide';
         }),
-        // Do not trigger hide after X seconds if cursor is on a control element
         switchMap((mode) => mode === 'queue-hide' ? timer(this.CONTROLS_HIDE_DELAY) : of()),
         startWith(null)
       ).subscribe((status) => {
         this.showControls = false;
+        //this.showControls = true;
       });
 
   }

@@ -1,6 +1,6 @@
 <div class="overlay" [class.visible]="this.visible">
     <div class="overlay-settings hide-top" [class.hidden]="!this.showControls" *ngIf="image">
-        <button mat-mini-fab color="primary" [mat-menu-trigger-for]="settingsMenu">
+        <button mat-fab color="primary" [mat-menu-trigger-for]="settingsMenu">
             <mat-icon>settings</mat-icon>
         </button>
         <mat-menu #settingsMenu="matMenu" class="settings-menu">
@@ -19,10 +19,10 @@
         </mat-menu>
     </div>
     <div class="overlay-top-bar hide-top" [class.hidden]="!this.showControls">
-        <button *ngIf="image" mat-mini-fab color="primary" (click)="showOriginalImage($event, image)">
+        <button *ngIf="image" mat-fab color="primary" (click)="showOriginalImage($event, image)">
             <mat-icon>download</mat-icon>
         </button>
-        <button class="close" mat-mini-fab color="primary" (click)="close()">
+        <button class="close" mat-fab color="primary" (click)="close()">
             <mat-icon>close</mat-icon>
         </button>
     </div>
@@ -31,14 +31,14 @@
     </div>
     <div class="overlay-footer hide-bottom" [class.hidden]="!this.showControls">
         <div class="start-stop">
-            <button mat-mini-fab color="primary" (click)="previous()">
+            <button mat-fab color="primary" (click)="previous()">
                 <mat-icon *ngIf="this.activeImageIdx <= 0">skip_previous</mat-icon>
                 <mat-icon *ngIf="this.activeImageIdx > 0">navigate_before</mat-icon>
             </button>
-            <button mat-mini-fab color="primary" (click)="startPlayback()" *ngIf="!this.isPlaying">
+            <button mat-fab color="primary" (click)="startPlayback()" *ngIf="!this.isPlaying">
                 <mat-icon>play_arrow</mat-icon>
             </button>
-            <button mat-mini-fab color="primary" (click)="pausePlayback()" *ngIf="this.isPlaying">
+            <button mat-fab color="primary" (click)="pausePlayback()" *ngIf="this.isPlaying">
                 <mat-progress-spinner
                         class="example-margin"
                         color="primary"
@@ -49,7 +49,7 @@
                 </mat-progress-spinner>
                 <mat-icon>pause</mat-icon>
             </button>
-            <button mat-mini-fab color="primary" (click)="next()">
+            <button mat-fab color="primary" (click)="next()">
                 <mat-icon *ngIf="this.activeImageIdx === this.images.length - 1">skip_next</mat-icon>
                 <mat-icon *ngIf="this.activeImageIdx !== this.images.length - 1">navigate_next</mat-icon>
             </button>

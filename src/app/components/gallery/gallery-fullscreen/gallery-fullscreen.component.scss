@@ -122,3 +122,8 @@ img {
 .hide-bottom.hidden {
   transform: translateY(5vh);
 }
+
+
+::ng-deep .mat-fab .mat-button-wrapper {
+  line-height: 22px;
+}
