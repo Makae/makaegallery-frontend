@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Image} from '../../../shared/models/gallery-model';
 import {DomSanitizer} from '@angular/platform-browser';
-import {fromEvent, interval, of, Subscription, timer} from 'rxjs';
+import {fromEvent, interval, of, Subscription, timer, zip} from 'rxjs';
 import {debounceTime, filter, map, startWith, switchMap, tap} from 'rxjs/operators';
 
 interface DisplayedImage extends Image {
@@ -19,7 +19,6 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
   public readonly MIN_DURATION = 1000;
   public readonly CHANGE_DURATION_SIZE = 500;
   public readonly CONTROLS_HIDE_DELAY = 1400;
-
   @Input()
   public images: DisplayedImage[] = [];
   @Input()
@@ -31,11 +30,13 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
   public timerProgress = 0;
   public isPlaying = false;
   public showControls = true;
+  private readonly SWIPE_THRESHOLD = 250;
   private readonly DEFAULT_DURATION = 6000;
   public playbackDuration = this.DEFAULT_DURATION;
   private showControlsSubscription?: Subscription;
   private playbackSubscription?: Subscription;
   private keyHandlingSubscription?: Subscription;
+  private swipeHandlingSubscription?: Subscription;
   private afterCloseCallback?: CallbackFn;
 
   public constructor(
@@ -53,6 +54,13 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
 
   private static getBody(): HTMLBodyElement | null {
     return document.querySelector('body');
+  }
+
+  private static getDistance(start: TouchEvent, end: TouchEvent): { x: number; y: number; } {
+    return {
+      x: start.changedTouches[0].clientX - end.changedTouches[0].clientX,
+      y: start.changedTouches[0].clientY - end.changedTouches[0].clientY,
+    }
   }
 
   public ngOnInit(): void {
@@ -159,10 +167,10 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
       fromEvent(document, 'mousemove').pipe(
         tap(() => this.showControls = true),
         map(event => {
-          if(event === null) {
+          if (event === null) {
             return 'queue-hide';
           }
-          return (event.target as HTMLElement)?.closest(".hide-top,.hide-bottom") === null ? 'queue-hide': 'no-queue-hide';
+          return (event.target as HTMLElement)?.closest(".hide-top,.hide-bottom") === null ? 'queue-hide' : 'no-queue-hide';
         }),
         // Do not trigger hide after X seconds if cursor is on a control element
         switchMap((mode) => mode === 'queue-hide' ? timer(this.CONTROLS_HIDE_DELAY) : of()),
@@ -170,10 +178,30 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
       ).subscribe((status) => {
         this.showControls = false;
       });
+
   }
 
   private bindKeyboardInputHandling(): void {
     this.keyHandlingSubscription?.unsubscribe();
+    this.swipeHandlingSubscription?.unsubscribe();
+
+    this.swipeHandlingSubscription = zip(
+      fromEvent<TouchEvent>(document, 'touchstart'),
+      fromEvent<TouchEvent>(document, 'touchend'),
+    ).pipe(
+      map(zipped => GalleryFullscreenComponent.getDistance(zipped[0], zipped[1])),
+      map(deltas => this.mapToSwipeType(deltas.x, deltas.y)),
+      filter(value => value !== null)
+    ).subscribe((swipeKind) => {
+      switch (swipeKind) {
+        case "left":
+          this.next();
+          break;
+        case "right":
+          this.previous();
+          break;
+      }
+    });
 
     this.keyHandlingSubscription = fromEvent<KeyboardEvent>(document, 'keyup').pipe(
       debounceTime(200)
@@ -202,8 +230,19 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
     });
   }
 
+  private mapToSwipeType(deltaX: number, deltaY: number) {
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > this.SWIPE_THRESHOLD) {
+      return deltaX < 0 ? 'right' : 'left';
+    }
+    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > this.SWIPE_THRESHOLD) {
+      return deltaY < 0 ? 'down' : 'up';
+    }
+    return null;
+  }
+
   private unsubscribeAll(): void {
     this.keyHandlingSubscription?.unsubscribe();
+    this.swipeHandlingSubscription?.unsubscribe();
     this.playbackSubscription?.unsubscribe();
     this.showControlsSubscription?.unsubscribe();
   }
