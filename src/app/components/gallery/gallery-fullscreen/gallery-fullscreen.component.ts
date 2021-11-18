@@ -30,7 +30,7 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
   public timerProgress = 0;
   public isPlaying = false;
   public showControls = true;
-  private readonly SWIPE_THRESHOLD = 250;
+  private readonly SWIPE_THRESHOLD = 40;
   private readonly DEFAULT_DURATION = 6000;
   public playbackDuration = this.DEFAULT_DURATION;
   private showControlsSubscription?: Subscription;
