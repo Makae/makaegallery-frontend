@@ -34,7 +34,7 @@ export class LandingPageComponent extends FormComponent implements OnInit {
 
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      [LoginFormFields.USER_NAME]: [undefined, {validators: [requiredValidator]}],
+      [LoginFormFields.USER_NAME]: ['jum_partygast', {validators: [requiredValidator]}],
       [LoginFormFields.PASSWORD]: [undefined, {validators: [requiredValidator]}],
     });
   }

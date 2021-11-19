@@ -82,13 +82,15 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
 
     const sliceSize = 200;
     let passed = 0;
+    this.timerProgress = 0;
     this.playbackSubscription = interval(sliceSize).subscribe(() => {
       passed += sliceSize;
       if (passed >= this.playbackDuration) {
         this.playbackSubscription?.unsubscribe();
         this.next();
       }
-      this.timerProgress = Math.ceil(passed / this.playbackDuration * 100);
+      const animationDelayOffset = 250;
+      this.timerProgress = Math.ceil(passed / (this.playbackDuration - animationDelayOffset) * 100);
     });
   }
 
@@ -188,7 +190,7 @@ export class GalleryFullscreenComponent implements OnInit, OnDestroy {
 
     this.swipeHandlingSubscription = zip(
       fromEvent<TouchEvent>(document, 'touchstart'),
-      fromEvent<TouchEvent>(document, 'touchend'),
+      fromEvent<TouchEvent>(document, 'touchend')
     ).pipe(
       map(zipped => GalleryFullscreenComponent.getDistance(zipped[0], zipped[1])),
       map(deltas => this.mapToSwipeType(deltas.x, deltas.y)),
